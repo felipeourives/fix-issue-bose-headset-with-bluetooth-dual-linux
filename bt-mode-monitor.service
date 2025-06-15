@@ -1,0 +1,12 @@
+[Unit]
+Description=Bluetooth Mode Monitor (Headset BR/EDR Switch)
+After=bluetooth.service
+
+[Service]
+ExecStart=/usr/local/bin/bt_mode_shell.sh
+Restart=always
+RestartSec=5
+User=root
+
+[Install]
+WantedBy=multi-user.target
