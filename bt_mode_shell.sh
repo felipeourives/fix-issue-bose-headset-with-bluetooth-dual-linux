@@ -1,9 +1,10 @@
 #!/bin/bash
-HEADSET_MAC="66:66:66:66:66:66"  # Change to your headset's MAC
+HEADSET_MAC="BC:87:FA:44:6F:91"  # Change to your headset's MAC
 
 dbus-monitor --system "type='signal', member='PropertiesChanged'" | while read -r line; do
-    echo "Running"
-    # Extract the MAC from path
+    #echo "Running"
+    #echo "$line" 
+    # Extract the MAC from path (hci0/dev_BC_87_FA_44_6F_91 → BC:87:FA:44:6F:91)
     if [[ "$line" =~ /hci[0-9]/dev_([0-9A-Fa-f_]+) ]]; then
         
 	CURRENT_MAC=$(echo "${BASH_REMATCH[1]}" | tr '_' ':')
@@ -28,9 +29,12 @@ dbus-monitor --system "type='signal', member='PropertiesChanged'" | while read -
                 echo "Switching to BR/EDR mode"
                 sudo btmgmt bredr on
                 sudo btmgmt le off
+		sleep 2
+		sudo btmgmt le on
             else
                 echo "Keeping DUAL mode"
-                sudo btmgmt dual on
+		sudo btmgmt bredr on
+                sudo btmgmt le on
             fi
             sudo btmgmt power on
         fi 
