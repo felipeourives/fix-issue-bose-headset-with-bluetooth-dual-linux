@@ -26,3 +26,5 @@ sudo systemctl enable --now bt-mode-monitor.service
 ```
 journalctl -u bt-mode-monitor -f
 ```
+### Bluez-utils
+It needs to be set as version 82. You can run btmgt commands on version 83.1.
